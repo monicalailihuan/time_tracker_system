@@ -35,7 +35,7 @@
         <div class="col-md-1">No. </div>
         <div class="col-md-3">Company</div>
         <div class="col-md-6">Engagement</div>
-        <div class="col-md-2">Total</div>
+        <div class="col-md-2">Total Revenue</div>
     </div>
 
     @foreach($companies as $company)

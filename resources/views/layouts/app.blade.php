@@ -54,8 +54,12 @@
                     <ul class="navbar-nav mr-auto head_link">
                         <li><a class="nav navbar-nav" title="Company" href="{{ url('/company') }}"><i class="fa fa-building"></i></a></li>
                         <li><a class="nav navbar-nav" title="Engagement" href="{{ url('/engagement') }}"><i class="fa fa-folder"></i></a></li>
-                        <li><a class="nav navbar-nav" title="Staff" href="{{ url('/staff') }}"><i class="fa fa-user"></i></a></li>
-                        <li><a class="nav navbar-nav" title="Report" href="{{ url('/report') }}"><i class="fa fa-line-chart"></i></a></li>
+                        @can('admin')
+                            <li><a class="nav navbar-nav" title="Staff" href="{{ url('/staff') }}"><i class="fa fa-user"></i></a></li>
+                        @endcan
+                        @can('sa')
+                            <li><a class="nav navbar-nav" title="Report" href="{{ url('/report') }}"><i class="fa fa-line-chart"></i></a></li>
+                        @endcan
                     </ul>
 
                     <!-- Right Side Of Navbar -->
