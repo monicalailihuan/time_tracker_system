@@ -94,7 +94,7 @@
         @yield('content')
 
     </div>
-    <footer>
+    <footer class="container">
         <div class="underline">
             <span class="pull-right">Copyright by Monica 2018, All Right Reserved.</span>
         </div>
