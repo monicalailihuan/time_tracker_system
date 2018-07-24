@@ -41,17 +41,25 @@
 			<div class="border">
 				<span class="value">
 					@if($engagement->jobs->count() > 0)
-						<div class="row underline" style="border-bottom: 1px solid gray">
+						<div class="row underline section_title" style="border-bottom: 1px solid gray">
 							<div class="col-md-2">
 								No.
 							</div>
 							<div class="col-md-4">
 								Title
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-2">
 								Budget Hour
 							</div>
+							<div class="col-md-2">
+								Working Hour
+							</div>
+							<div class="col-md-2">
+								Variance
+							</div>
 						</div>
+
+						<?php $total_engagement = 0; ?>
 						@foreach($engagement->jobs as $job)
 							<div class="row">
 								<div class="col-md-2">
@@ -59,12 +67,78 @@
 								</div>
 								<div class="col-md-4">
 									<a href="/job/{{ $job->id }}">{{ $job->title }}</a>
+										<?php $total = 0; ?>
+										<?php $total_hour = 0; ?>
+										<?php $user_collect = collect(); ?>
+										@foreach($job->job_rates->sortBy('user_id') as $job_rate)
+											<?php // $total_hour += $job_rate->hour; ?>
+											<?php // $total += $job_rate->hour * $job_rate->rates->salary; ?>
+											<?php $user = collect(); ?>
+													<?php 
+														$user['user_id'] = $job_rate->rates->staff->id;
+														$user['name'] = $job_rate->rates->staff->name;
+														$user['working_hour'] = $job_rate->hour;
+														$user['salary'] = $job_rate->rates->salary;
+														$user['total_earn'] = $job_rate->hour * $job_rate->rates->salary;
+
+														$user_collect->push($user->all());
+													?>
+													{{-- {{ $job_rate->rates->staff->name }} --}}
+													{{-- {{ $job_rate->hour }} --}}
+													{{-- {{ $job_rate->hour * $job_rate->rates->salary }} --}}
+										@endforeach
+
+										@foreach($user_collect->groupBy('name') as $name => $uc)
+											<div class="row">
+												<div class="col-md-6">-{{ $name }}</div>
+												<div class="col-md-6">{{ $uc->sum('total_earn') }}</div>
+											</div>
+
+											<?php $total_engagement += $uc->sum('total_earn') ?>
+										@endforeach
+
+									{{-- @foreach($staffs as $staff)
+										<div class="row">
+											@foreach($staff->salaries as $salary)
+												@if(in_array($salary->id, $job->job_rates->pluck('salary_id')->toArray()))
+													<div class="col-md-12">{{ $staff->name }} <i class="fa fa-arrow-long-right"></i>{{ $salary->salary }}</div>
+												@endif
+											@endforeach
+										</div>
+									@endforeach --}}
+									
+
+
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-2">
 									{{ $job->hour }}
 								</div>
+								<div class="col-md-2">
+									{{ $job->job_rates->sum('hour') }}
+								</div>
+								 @if($job->stage_id==1)
+					                <div class="col-md-2 "><span class="normal">TBD</span></div>
+					            @else
+					                <div class="col-md-2 "><span class="{{ $job->hour < $job->job_rates->sum('hour') ? 'danger' : 'ok' }}">{{ $job->hour - $job->job_rates->sum('hour') }}</span></div>
+					            @endif
 							</div>
 						@endforeach
+						
+
+						<div class="row underline section_title" style="border-bottom: 1px solid gray">
+							<div class="col-md-2">
+								Total Cost
+							</div>
+							<div class="col-md-4">
+								<div class="row">
+									<div class="col-md-6"></div>
+									<div class="col-md-6">{{ $total_engagement }}</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+
+							</div>
+						</div>
 					@else
 						No job for this engagement. 
 					

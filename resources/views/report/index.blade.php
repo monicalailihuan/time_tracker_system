@@ -23,7 +23,7 @@
 
         <div class="col-md-12">
         	4. 
-			<a href="/staff_earn">Staff Total Earn Report</a>
+			<a href="/staff_earn">Staff Cost Report</a>
 			{{-- staff total earn --}}
         </div>
 

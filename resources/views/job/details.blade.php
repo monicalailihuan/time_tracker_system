@@ -128,12 +128,15 @@
 								Hour Used
 							</div>
 
-							<div class="col-md-3">
+							<div class="col-md-2">
 								Rate x Hour (RM)
 							</div>
 
-							<div class="col-md-3">
+							<div class="col-md-2">
 								Remark
+							</div>
+							<div class="col-md-2">
+								Created At
 							</div>
 						</div>
 						<?php $total = 0; ?>
@@ -151,16 +154,20 @@
 								<div class="col-md-2">
 									{{ $job_rate->hour }}
 								</div>
-								<div class="col-md-3">
+								<div class="col-md-2">
 									<?php $total += $job_rate->hour * $job_rate->rates->salary; ?>
 									<span data-toggle="tooltip" title="{{ $job_rate->hour .' x '. $job_rate->rates->salary }}">
 										{{ $job_rate->hour * $job_rate->rates->salary }}
 									</span>
 								</div>
 								
-								<div class="col-md-3">
+								<div class="col-md-2">
 									{{ $job_rate->remark ? $job_rate->remark : 'N/A' }}
 								</div>
+								<div class="col-md-2">
+									{{ date('d M Y', strtotime($job_rate->created_at)) }}
+								</div>
+
 							</div>
 						@endforeach
 
@@ -175,9 +182,7 @@
 								{{ $total }}
 							</div>
 
-							<div class="col-md-3">
-							</div>
-							<div class="col-md-3">
+							<div class="col-md-6">
 							</div>
 						</div>
 					@else

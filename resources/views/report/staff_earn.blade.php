@@ -7,7 +7,7 @@
             <a href="/report">< Report List</a>
         </div>
         <div class="col-md-12">
-            <h3>Staff Earn Report</h3>
+            <h3>Staff Cost Report</h3>
         </div>
     </div>
 
@@ -17,7 +17,7 @@
         <div class="col-md-1">Job</div>
         <div class="col-md-2">Total Budget Hour</div>
         <div class="col-md-2">Total Working Hour</div>
-        <div class="col-md-2">Total Earning</div>
+        <div class="col-md-2">Total Cost</div>
     </div>
 
         <?php $overall_budget_hour = 0; ?>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\Engagement;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -99,7 +100,8 @@ class EngagementController extends Controller
      */
     public function show(Engagement $engagement)
     {
-        return view('engagement.show', compact('engagement'));
+        $staffs = User::with('salaries')->orderBy('name')->get();
+        return view('engagement.show', compact('engagement', 'staffs'));
     }
 
     /**
