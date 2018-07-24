@@ -149,13 +149,13 @@
 						<h3>Engagement and Job Details</h3>
 					</div>
 					<div class="col-md-12">
-							<div class="row underline">
-								<div class="col-md-2"></div>
-								<div class="col-md-4">Engagement - Job</div>
-								<div class="col-md-2">Status</div>
-								<div class="col-md-2">Budget Hour</div>
-							</div>
-						@foreach($staff->jobs->sortByDesc('created_at') as $job)
+						<div class="row underline">
+							<div class="col-md-2"></div>
+							<div class="col-md-4">Engagement - Job</div>
+							<div class="col-md-2">Status</div>
+							<div class="col-md-2">Budget Hour</div>
+						</div>
+						@foreach($staff->assigned_jobs->sortByDesc('created_at') as $job)
 							<div class="row underline">
 								<div class="col-md-2">{{ $loop->iteration }}</div>
 								<div class="col-md-4"><a href="/job/{{ $job->id }}">{{ $job->engagement->name.' - '.$job->title }}</a></div>

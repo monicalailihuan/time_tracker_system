@@ -7,16 +7,17 @@
 			@if($job->staffs->count() > 0)
 				@foreach($job->staffs as $staff)
 
-					@if($staff->id == Auth()->id() && $staff->pivot->complete == 0)
+					@if($staff->id == Auth()->id())
 						<h3>Working Hour</h3>
 						<form action="/job/{{ $job->id }}/track" method="Post">
 							{{ csrf_field() }}
-							{{ method_field('PATCH') }}
 							
 							<div class="form-group">
 								<label for=""></label>
 								<input type="number" class="form-control" id="" name="hour" value="" placeholder="Working Hour" required>
 							</div>
+
+							<input type="hidden" name="salary_id" value="{{ $staff->salaries->where('status', 'A')->first()->id }}">
 
 							<textarea name="remark" class="form-control" id=""></textarea>
 							<br/>

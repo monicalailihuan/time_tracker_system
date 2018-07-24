@@ -68,7 +68,7 @@ Route::patch('job/{job}/complete', 'JobsController@complete');
 Route::patch('job/{job}/review', 'JobsController@review');
 
 Route::post('job/{job}/assign', 'JobsController@assign');
-Route::patch('job/{job}/track', 'JobsController@track');
+Route::post('job/{job}/track', 'JobsController@track');
 
 
 // report
@@ -76,4 +76,5 @@ Route::get('report', 'ReportController@index');
 Route::get('revenue', 'ReportController@revenue');
 Route::get('high_variance', 'ReportController@high_variance');
 Route::get('staff_earn', 'ReportController@staff_earn');
-Route::get('budget_hour', 'ReportController@budget_hour');
+Route::get('engagement_revenue', 'ReportController@engagement_revenue');
+// Route::get('budget_hour', 'ReportController@budget_hour');

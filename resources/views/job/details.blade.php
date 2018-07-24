@@ -3,6 +3,7 @@
 		<i class="fa fa-list-alt" data-toggle="tooltip" title="Job"></i>
 		{{ $job->title }}
 		<div class="pull-right">
+
 			@if($job->stage_id == 1)
 				<form action="/job/{{ $job->id }}/complete" method="Post">
 					{{ csrf_field() }}
@@ -68,6 +69,25 @@
 			{{ $job->hour }}
 		</div>
 
+
+		<div class="key-attribute col-md-3">
+			<div class="row">
+				<div class="col-md-2">
+					<i class="fa fa-users" data-toggle="tooltip" title="Staff Currently Assigned"> </i>
+				</div>
+				<div class="col-md-10">
+					@if($job->staffs->count() > 0)
+						@foreach($job->staffs as $staff)
+							<div>{{ $loop->iteration }}. {{ $staff->name }}</div>
+						@endforeach
+					@else
+						- TBD -
+					@endif
+				</div>
+			</div>
+			
+		</div>
+
 	</div>
 
 	<div class="row border">
@@ -93,7 +113,7 @@
 			<div class="row border">
 				<div class="col-md-12 hide-item show staff_list">
 
-					@if($job->staffs->count() > 0)
+					@if($job->job_rates->count() > 0)
 						<div class="row underline" style="border-bottom: 1px solid gray">
 							<div class="col-md-1">
 								No.
@@ -102,92 +122,75 @@
 								Staff
 							</div>
 							<div class="col-md-1">
+								Salary
+							</div>
+							<div class="col-md-2">
 								Hour Used
 							</div>
 
-							<div class="col-md-2">
+							<div class="col-md-3">
 								Rate x Hour (RM)
 							</div>
 
-							<div class="col-md-2">
-								Status
-							</div>
-							<div class="col-md-4">
+							<div class="col-md-3">
 								Remark
 							</div>
 						</div>
-							
-						@foreach($job->staffs as $staff)
+						<?php $total = 0; ?>
+						@foreach($job->job_rates->sortBy('user_id') as $job_rate)
 							<div class="row">
 								<div class="col-md-1">
 									{{ $loop->iteration }}
 								</div>
 								<div class="col-md-2">
-									{{ $staff->name }}
+									{{ $job_rate->rates->staff->name }}
 								</div>
 								<div class="col-md-1">
-									{{ $staff->pivot->hour }}
+									{{ $job_rate->rates->salary }}
 								</div>
 								<div class="col-md-2">
-									<span data-toggle="tooltip" title="{{ $staff->salaries->count() > 0 ? $staff->salaries->where('status', 'A')->first()->salary.' x '.$staff->pivot->hour : 'N/A' }}">
-										{{ $staff->salaries->count() > 0 ? $staff->salaries->where('status', 'A')->first()->salary * $staff->pivot->hour : 'N/A' }}
+									{{ $job_rate->hour }}
+								</div>
+								<div class="col-md-3">
+									<?php $total += $job_rate->hour * $job_rate->rates->salary; ?>
+									<span data-toggle="tooltip" title="{{ $job_rate->hour .' x '. $job_rate->rates->salary }}">
+										{{ $job_rate->hour * $job_rate->rates->salary }}
 									</span>
 								</div>
-								<div class="col-md-2">
-									{{ $staff->pivot->complete == 0 ? 'Ongoing' : 'Completed' }}
-								</div>
-								<div class="col-md-4">
-									{{ $staff->pivot->remark ? $staff->pivot->remark : 'N/A' }}
+								
+								<div class="col-md-3">
+									{{ $job_rate->remark ? $job_rate->remark : 'N/A' }}
 								</div>
 							</div>
 						@endforeach
 
-							<div class="row overline">
-								<div class="col-md-3">
-									<label for="">Total:</label>
-								</div>
-								<div class="col-md-1">
-									@if($job->stage_id==3)
-										<?php $total = 0; ?>
-										<?php $total_rate = 0; ?>
-										@foreach($job->staffs as $staff)
-											<?php $total += $staff->pivot->hour; ?>
-											<?php $total_rate += $staff->salaries->count() > 0 ? $staff->salaries->where('status', 'A')->first()->salary * $staff->pivot->hour : 0 ?>
-										@endforeach
-										{{ $total }}
-									@else
-										TBD
-									@endif
-								</div>
-								<div class="col-md-1">
-									@if($job->stage_id==3)
-										{{ $total_rate  }}
-									@else
-										TBD
-									@endif
-								</div>
-
-								<div class="col-md-2">
-								</div>
-								<div class="col-md-4">
-								</div>
+						<div class="row overline">
+							<div class="col-md-4">
+								<label for="">Total:</label>
 							</div>
+							<div class="col-md-2">
+								{{ $job->job_rates->sum('hour') }}
+							</div>
+							<div class="col-md-2">
+								{{ $total }}
+							</div>
+
+							<div class="col-md-3">
+							</div>
+							<div class="col-md-3">
+							</div>
+						</div>
 					@else
-						No staff assigned.
+						No working log
 						{{-- <a href="/job/create?engagement={{ $job->id }}" class="btn btn-primary"><i class="fa fa-plus"></i> New Job</a> --}}
 					@endif
 				</div>
 				<div class="col-md-12 hide-item assign_form">
 					<form action="/job/{{ $job->id }}/assign" method="POST">
 						{{ csrf_field() }}
-						{{-- {{ method_field('PATCH') }} --}}
 								@foreach($staffs as $staff)
 									<div class="form-group col-md-4">
-										<input type="checkbox" id="" name="user_id[]" value="{{ $staff->id }}" 
-										@foreach($job->staffs as $this_job_staff)
-											{{ $this_job_staff->id == $staff->id ? 'checked' : '' }}
-										@endforeach
-										>
+										<input type="checkbox" id="" name="user_id[]" value="{{ $staff->id }}" {{ in_array($staff->id, $job->staffs->pluck('id')->toArray()) ? 'checked' : '' }}>
 										<span>{{ $staff->name }}</span>
 									</div>
 								@endforeach

@@ -18,15 +18,27 @@ class Job extends Model
     ];
 
 
-    public function jobs()
+    // public function jobs()
+    // {
+    //     return $this->hasMany(Job::class);
+    // }
+
+    // public function job()
+    // {
+    //     return $this->belongsTo(Job::class, 'job_id');
+    // }
+    // 
+    public function job_rates()
     {
-        return $this->hasMany(Job::class);
+        return $this->hasMany(JobRate::class);
     }
 
-    public function job()
+
+    public function new_job_rate(JobRate $job_rate)  
     {
-        return $this->belongsTo(Job::class, 'job_id');
-    }
+       return $this->job_rates()->save($job_rate);
+    } 
+
 
 
     public function stage()
@@ -44,7 +56,7 @@ class Job extends Model
 
     public function staffs()
     {
-        return $this->belongsToMany(User::class)->withPivot('complete', 'hour', 'remark');
+        return $this->belongsToMany(User::class)->withPivot('status');
     }
 
   

@@ -31,13 +31,14 @@
         </div>
     </div>
 
-    <div class="row underline">
+    <div class="row underline section_title">
         <div class="col-md-1">No. </div>
         <div class="col-md-3">Company</div>
         <div class="col-md-6">Engagement</div>
         <div class="col-md-2">Total Revenue</div>
     </div>
 
+    <?php $total = 0; ?>
     @foreach($companies as $company)
         <div class="row underline">
             <div class="col-md-1">{{ $loop->iteration }}</div>
@@ -51,12 +52,13 @@
                             <span data-toggle="tooltip" title="Engagement Revenue">
                                 <?php $total_engagement_revenue = 0; ?>
                                 @foreach($engagement->jobs as $job)
-                                    @foreach($job->staffs as $staff)
-                                        <?php $total_engagement_revenue += $staff->salaries->count() > 0 ? $staff->salaries->where('status', 'A')->first()->salary * $staff->pivot->hour : 0 ?>
+                                    @foreach($job->job_rates as $job_rate)
+                                        <?php $total_engagement_revenue += $job_rate->hour * $job_rate->rates->salary ?>
                                     @endforeach
                                 @endforeach    
                                 {{ $total_engagement_revenue }}
                                 <?php $total_revenue += $total_engagement_revenue; ?>
+                                <?php $total += $total_engagement_revenue; ?>
 
                             </span> 
                         </div>
@@ -71,5 +73,8 @@
 
         </div>
     @endforeach
-        
+        <div class="row underline section_title">
+            <div class="col-md-10">Total:</div>
+            <div class="col-md-2">{{ $total }}</div>
+        </div>
 @stop

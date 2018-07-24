@@ -28,9 +28,16 @@ class User extends Authenticatable
     ];
 
 
+    public function assigned_jobs()
+    {
+        return $this->belongsToMany(Job::class)->withPivot('status');
+    }
+    
+
+
     public function jobs()
     {
-        return $this->belongsToMany(Job::class)->withPivot('complete', 'hour', 'remark');
+        return $this->hasMany(Job::class);
     }
 
 

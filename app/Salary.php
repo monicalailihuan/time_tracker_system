@@ -24,15 +24,16 @@ class Salary extends Model
     }
 
 
-    public function jobs()
-    {
-        return $this->hasMany(Job::class);
-    }
-
-
-    public function salary()
+    public function staff()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+
+    public function job_rates()
+    {
+        return $this->hasMany(JobRate::class);
+    }
+
 
 }
