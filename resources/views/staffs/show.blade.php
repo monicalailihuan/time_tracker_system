@@ -34,22 +34,21 @@
 			</div>
 
 
-			@if(Auth()->user()->id==15)
 			<div class="col-md-6">
 				<div class="form-group">
-					<label>Browser</label><br/>
-					@if(count($devices) > 0)
-						@foreach($devices->unique() as $device)
-							<div class="underline">
-								{{ $device }}
-							</div>
-						@endforeach
-					@else
-						N/A
-					@endif
+					<form action="/staff/{{ $staff->id }}/edit_position" method="POST">
+          {{ csrf_field() }}
+                    {{ method_field('PATCH') }}
+
+						<select name="position_id" class="form-control">
+							@foreach($positions as $position)
+								<option value="{{ $position->id }}" {{ $position->id == $staff->position_id ? 'selected' : '' }}>{{ $position->name }}</option>
+							@endforeach
+						</select>
+						<button class="btn btn-primary">Update Position</button>
+					</form>
 				</div>
 			</div>
-			@endif
 
 			<div class="col-md-12">
 				<div class="form-group">
@@ -175,5 +174,3 @@
 		</div>
 
 @stop
-
-

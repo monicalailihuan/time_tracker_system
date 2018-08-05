@@ -23,7 +23,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<div class="underline"><label>Status</label></div>
-								{{ trans('job/index.status'.$role->status) }}
+								{{ $role->status }}
 							</div>
 						</div>
 					</div>

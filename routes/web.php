@@ -42,6 +42,7 @@ Route::get('profile/edit', 'StaffsController@edit');
 Route::patch('profile/update', 'StaffsController@update');
 Route::post('staff/{staff}/assign_role', 'StaffsController@assign_role');
 Route::patch('staff/{staff}/status', 'StaffsController@status');
+Route::patch('staff/{staff}/edit_position', 'StaffsController@edit_position');
 Route::post('staff/{staff}/salary', 'StaffsController@salary');
 
 

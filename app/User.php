@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'status'
+        'name', 'email', 'position_id','password', 'status'
     ];
 
     /**
@@ -52,5 +52,10 @@ class User extends Authenticatable
     {
        return $this->salaries()->save($salary);
     }
+public function position()
+    {
+        return $this->belongsTo(Position::class, 'position_id');
+    }
+
 
 }

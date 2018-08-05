@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Role;
+use App\Position;
 use App\Salary;
 use App\User;
 use Illuminate\Http\Request;
@@ -80,7 +81,8 @@ class StaffsController extends Controller
         // $agoDate = $currentDate->subDays($currentDate->dayOfWeek)->subWeek();
      
         $roles =  Role::all();
-        return view('staffs.show', compact('staff', 'roles' ));
+        $positions =  Position::all();
+        return view('staffs.show', compact('staff', 'roles','positions' ));
     }
 
     /**
@@ -169,6 +171,15 @@ class StaffsController extends Controller
         return redirect('/staff/'.$staff->id);
     } 
 
+public function edit_position(Request $request, $user)
+    {
+        $staff = User::find($user);
+
+        $staff->update($request->all());
+
+        flash()->overlay('Status Updated', 'Success');
+        return redirect('/staff/'.$staff->id);
+    } 
 
 
     public function edit_pass()
