@@ -173,7 +173,7 @@
 
     	<div class="col-md-3">
         	<div class="row">
-    	    	{{-- @can('sa') --}}
+    	    	 @can('sa')
             	    <div class="stage btn-primary col-md-12">
             	    	<a href="/engagement/create{{ request('company') ? '?company='.request('company') : '' }}">
     						<div class="row">
@@ -182,7 +182,7 @@
                             </div>
             	    	</a>
             	    </div>
-    			{{-- @endcan --}}
+    			@endcan 
     			
     			
     		</div>

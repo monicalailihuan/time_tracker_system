@@ -5,14 +5,18 @@
 <div class="col-md-12 underline">
 	<h2>
 		General Info 
+		@can('admin')
 		<a class="btn btn-primary" id="edit" style="color: white">
 			<span class="fa fa-edit" > </span>
 			Edit
 		</a>
+		@endcan
+		@can('sa')
 		<a class="btn-primary btn" href="/engagement/create?company={{ $company->name }}">
             <span class="icon fa fa-plus"></span>
             New Engagement
     	</a>
+    	@endcan	
 	</h2>
 	<div class="row">
 		<div class="col-md-12">

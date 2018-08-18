@@ -7,7 +7,8 @@
             <h3>Companies List</h3>
             @include('companies.list')
         </div>
-        
+        @can('admin')
         @include('companies.add-companies')
+        @endcan
     </div>
 @stop
