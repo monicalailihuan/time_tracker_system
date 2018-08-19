@@ -99,7 +99,7 @@
 			<div class="col-md-12">
 				<div class="row">
 					<div class="col-md-12">
-						<h3>Salary Details</h3>
+						<h3>Staff Chargeout Details</h3>
 					</div>
 					<div class="col-md-8">
 							<div class="row underline">
@@ -122,16 +122,16 @@
 
 
 					<div class="col-md-4">
-						<h3 class="underline">Staff Salary</h3>
+						<h3 class="underline">Staff Charge</h3>
 						<form action="/staff/{{ $staff->id }}/salary" method="POST">
 							{{ csrf_field() }}
 							<div class="form-group">
-								<label for="salary">Salary</label>
-								<input type="text" class="form-control" id="salary" name="salary" value="{{ old('salary') }}" placeholder="Salary per hour" required>
+								<label for="salary">Chargeout Rate</label>
+								<input type="text" class="form-control" id="salary" name="salary" value="{{ old('salary') }}" placeholder="Charge rate per hour" required>
 							</div>
 
 							<div class="form-group">
-								<button class="btn btn-primary">Update Staff's Salary</button>
+								<button class="btn btn-primary">Update Staff's Charge</button>
 							</div>
 
 						</form>

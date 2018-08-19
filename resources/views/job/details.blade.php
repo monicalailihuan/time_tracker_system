@@ -122,8 +122,9 @@
 								Staff
 							</div>
 							<div class="col-md-1">
-								Salary
+							 Rate
 							</div>
+
 							<div class="col-md-2">
 								Hour Used
 							</div>
