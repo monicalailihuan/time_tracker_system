@@ -37,7 +37,10 @@
 
 	<div class="row border">
 		<div class="col-md-12">
-			<label class="attribute_title" for="remark"><i class="fa fa-list-alt"></i> Job <a href="/job/create?engagement={{ $engagement->id }}" class="btn btn-primary"><i class="fa fa-plus"></i> New Job</a></label>
+			<label class="attribute_title" for="remark"><i class="fa fa-list-alt"></i> Job 
+@can('sa')
+				<a href="/job/create?engagement={{ $engagement->id }}" class="btn btn-primary"><i class="fa fa-plus"></i> New Job</a>
+			@endcan </label>
 			<div class="border">
 				<span class="value">
 					@if($engagement->jobs->count() > 0)

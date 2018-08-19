@@ -106,7 +106,9 @@
 		<div class="col-md-12">
 			<label class="attribute_title" for="remark">Staff Assign</label>
 			@if($job->stage_id == 1)
+			@can("sa")
 				<a class="btn btn-primary assign" style="color: white"><i class="fa fa-plus"></i> Assign Staff</a>
+				@endcan
 			@endif
 		</div>
 		<div class="col-md-12">
